@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:unit_converter/unit.dart';
 
-class ConverterPage extends StatelessWidget {
+class ConverterPage extends StatefulWidget {
   final String name;
   final Color color;
   final List<Unit> units;
@@ -16,10 +16,15 @@ class ConverterPage extends StatelessWidget {
         assert(units != null);
 
   @override
+  _ConverterPageState createState() => _ConverterPageState();
+}
+
+class _ConverterPageState extends State<ConverterPage> {
+  @override
   Widget build(BuildContext context) {
-    final unitWidgets = units.map((Unit unit) {
+    final unitWidgets = widget.units.map((Unit unit) {
       return Container(
-        color: color,
+        color: widget.color,
         margin: EdgeInsets.all(8.0),
         padding: EdgeInsets.all(16.0),
         child: Column(

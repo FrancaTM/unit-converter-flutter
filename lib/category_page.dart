@@ -5,9 +5,14 @@ import 'package:unit_converter/unit.dart';
 
 final _backgroundColor = Colors.green[100];
 
-class CategoryPage extends StatelessWidget {
+class CategoryPage extends StatefulWidget {
   const CategoryPage();
 
+  @override
+  _CategoryPageState createState() => _CategoryPageState();
+}
+
+class _CategoryPageState extends State<CategoryPage> {
   static const _categoryNames = <String>[
     'Length',
     'Area',
@@ -30,10 +35,12 @@ class CategoryPage extends StatelessWidget {
     Colors.red,
   ];
 
-  _buildCategoryWidgets(List<Widget> categories) {
+  final _categories = <Category>[];
+
+  _buildCategoryWidgets() {
     return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => categories[index],
-      itemCount: categories.length,
+      itemBuilder: (BuildContext context, int index) => _categories[index],
+      itemCount: _categories.length,
     );
   }
 
@@ -48,22 +55,25 @@ class CategoryPage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final categories = <Category>[];
+  void initState() {
+    super.initState();
 
     for (var i = 0; i < _categoryNames.length; i++) {
-      categories.add(Category(
+      _categories.add(Category(
         name: _categoryNames[i],
         color: _baseColors[i],
         icon: Icons.cake,
         units: _retrieveUnitList(_categoryNames[i]),
       ));
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     final listView = Container(
       color: _backgroundColor,
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: _buildCategoryWidgets(categories),
+      child: _buildCategoryWidgets(),
     );
 
     final appBar = AppBar(
